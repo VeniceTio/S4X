@@ -22,7 +22,13 @@ else:  				# si ouverture ok
         splitline = line.split(':')
         if splitline[-1][:-1] == sys.argv[1]:
             age = datetime.date.today().year - int(splitline[-2])
-            chaine = splitline[0] + "\t| " + splitline[2] + "\t\t\t| " + str(age)
+            chaine = splitline[0]
+            while len(chaine) < 30 :
+                chaine += " "
+            chaine += "| " + splitline[2]
+            while len(chaine) < 60 :
+                chaine += " "
+            chaine += "| " + str(age)
             print(chaine)
 
     f.close()
