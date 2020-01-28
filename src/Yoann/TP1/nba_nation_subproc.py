@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 # nba_nation_subproc.py
-#!/usr/bin/python3
 
 '''
 Structure du fichier nba_2019.txt dont on suppose qu'il est ds le repertoire courant :
@@ -16,14 +15,13 @@ from os.path import basename, isfile
 from sys import stderr, argv
 
 def traiter_fichier(joueurs):
-    # Reouverture du fichier
-    # global nom_fichier
-    joueurs = open(nom_fichier, 'r')
     chaine = []
     for un_joueur in joueurs:
-        chaine += un_joueur
+        un_joueur = un_joueur[:-1]
+        if un_joueur.endswith(nation):
+            chaine += [un_joueur]
     joueurs.close()
-    return un_joueur
+    return chaine
 
 
 nom_fichier='nba_2019.txt'
@@ -41,9 +39,5 @@ except IOError:
 else:
     tab = traiter_fichier(joueurs)
     joueurs.close()
-    if __name__ == "__main__" :
-        for ele in tab:
-            print(ele)
-    else:
-        for ele in tab:
-            print(ele)
+    for i in range(0, len(tab)):
+        print(tab[i])
