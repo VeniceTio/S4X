@@ -13,7 +13,7 @@ if len(sys.argv) > 2:                   # text from cmd line args 2..n
     if len(sys.argv) > 3:
         serverHost = sys.argv[3]         # server from cmd line arg 1
 else:
-    print("Usage: ./wine_bottles_client.py port nbBouteilles [ host ]")
+    print("Usage: ./wine_bottles_client.py <port> <nbBouteilles> [ host ]")
     exit(1)
 
 sockobj = socket(AF_INET, SOCK_STREAM)      # make a TCP/IP socket object

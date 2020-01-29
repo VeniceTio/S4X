@@ -5,6 +5,9 @@
 
 import os,sys,subprocess
 from datetime import datetime
+if len(sys.argv) < 1:
+    print("Usage: ./nba_nation_parent.py <nation>")
+    exit(1)
 pipe = subprocess.Popen(["./nba_nation_subproc.py",sys.argv[1]], stdout=subprocess.PIPE, universal_newlines=True)
 annee_courante = datetime.now().year
 

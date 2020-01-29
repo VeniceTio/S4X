@@ -12,7 +12,7 @@ if len(sys.argv) > 1:                   # text from cmd line args 2..n
     if len(sys.argv) > 2:                   # text from cmd line args 2..n
         stock = int(sys.argv[2])
 else:
-    print("Usage: ./wine_bottles_server.py port [ stockBouteilles ]")
+    print("Usage: ./wine_bottles_server.py <port> [ stockBouteilles ]")
     exit(1)
 
 
