@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import sys
+import time
 from socket import *                    # get socket constructor and constants
 myHost = ''                             # '' = all available interfaces on host
 stock = 300                            # Il y a 300 bouteilles en stock au début par défaut
@@ -25,6 +26,7 @@ while stock > 0:                                  # listen until process killed
     print('Serveur connecté par', address)    # connection is a new socket
     data = int(connection.recv(1024).decode())    # read first line on client socket
     if data >= 0:
+        time.sleep(1)
         print('Commande de {:d} bouteille(s)'.format(data))
         if (stock-data) >= 0:
             message = data            # send a reply line to the client
@@ -32,7 +34,9 @@ while stock > 0:                                  # listen until process killed
         else:
             message = stock
             stock = 0
+        time.sleep(1)
         print('Reste en stock : {:d} bouteille(s)'.format(stock))
+        time.sleep(1)
         connection.send(str(message).encode())    # until eof when socket closed
     connection.close()
 sockobj.close()
