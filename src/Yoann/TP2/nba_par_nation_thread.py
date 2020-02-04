@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf8 -*-
 
-from threading import Thread
+from threading import Thread, Lock
 from time import sleep
 from sys import argv, stderr, stdout
 from queue import Queue
@@ -16,7 +16,7 @@ def producteur(fifo, joueurs, nation):
         if un_joueur.endswith(nation):
             fifo.put(un_joueur)
             sleep(2)
-    fifo.task_done()
+    fifo.put(None)
     joueurs.close()
 
 # définition de la fonction reader
