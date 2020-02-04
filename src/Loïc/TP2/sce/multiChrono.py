@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
-#______________________________________________________________________________
+#______________________________________________________________________________ 
 # MULTI chronometre qui va creer un nouveau (processus) chrono chaque fois qu'il
 # receptionne le signal SIGTERM (=15)
-# A reception du signal SIGINT, le processus envoie ce signal vers tous ses
+# A reception du signal SIGINT, le processus envoie ce signal vers tous ses 
 # fils qui affichent chacun la valeur de leur compteur
-# sur le signal SIGQUIT le processus envoie ce signal vers tous ses fils, qui
+# sur le signal SIGQUIT le processus envoie ce signal vers tous ses fils, qui 
 # affichent la valeur de leur compteur et arretent.
-#______________________________________________________________________________
+#______________________________________________________________________________ 
 
 import signal, os, sys
 
@@ -17,9 +17,9 @@ def nouveau(signum, frame) :
     try: pid = os.fork()
     except OSError: print('Fork: erreur !', file=sys.stderr)
     else: # fork OK
-        if pid == 0 :
+        if pid == 0 : 
         # le fils exec. le code de chrono.py qui "recouvre"/ecrase celui du pere
-            os.execl('chrono.py', "")  # positionner droit x pour chrono.py !
+            os.execl('./chrono.py', " ")  # positionner droit x pour chrono.py !
             exit(255) # seulement fait si execl echoue
         else :
             FILS.append(pid)  # on ajoute le PID du fils "chrono"
@@ -44,7 +44,7 @@ def arret(signum, frame) :
     exit(0)
 
 # debut du programme main
-# association signaux/handlers
+# association signaux/handlers 
 signal.signal(signal.SIGTERM, nouveau)	# on cree un nouveau chrono
 signal.signal(signal.SIGINT, inter)     # fct "inter" liee au signal SIGINT (2)
 signal.signal(signal.SIGQUIT, arret)  	# fct "arret" liee au signal SIGQUIT (3)
@@ -55,7 +55,7 @@ print("Je suis le gestionnaire de CHRONOMETRES !")
 print("__________________")
 print("kill -2", monPID, "(dans un terminal) pour affichage de tous les chronos")
 print("kill -3", monPID, "(dans un terminal) pour quitter et stop chronometres")
-print("kill -15", monPID, "(dans un terminal) pour creer un chrono")
+print("kill -15", monPID, "(dans un terminal) pour creer un chrono") 
 print("__________________")
 
 # boucle attente evenements

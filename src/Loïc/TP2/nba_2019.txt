@@ -1,0 +1,14 @@
+Dwight Howard:2.11:LA Lakers:1985:us
+Lebron James:2.03:LA Lakers:1984:us
+Joakim Noah:2.11:Memphis Grizzlies:1985:fr
+Stephen Curry:1.90:Golden State Warriors:1988:us
+Derrick Rose:1.90:Detroit Pistons:1988:us
+Rudy Gobert:2.16:Utah Jazz:1992:fr
+Marc Gasol:2.16:Toronto Raptors:1985:es
+Nicolas Batum:2.03:Charlotte Hornets:1988:fr
+Draymond Green:2.01:Golden State Warriors:1990:us
+Kevin Durant:2.06:Brooklyn Nets:1988:us
+Pau Gasol:2.13:Portland Trail Blazers:1980:es
+Kevin Love:2.08:Cleveland Cavaliers:1988:us
+Kawhi Leonard:2.01:LA Clippers:1991:us
+Giannis Antetokounmpo:2.11:Milwaukee Bucks:1994:gr

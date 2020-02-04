@@ -31,4 +31,3 @@ thread2.start()
 thread1.join()
 thread2.join()
 print("valeur du compteur", compteur)
-
