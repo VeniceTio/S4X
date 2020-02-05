@@ -16,35 +16,35 @@ from time import sleep
 from random import random
 # import A COMPLETER
 
-def ping(mutex) :
-    # global Mutex  # pas obligatoire
+def ping() :
+    global Mutex  # pas obligatoire
     global Ping_OK  # obligatoire car la variable est m.a.j.
     sleep(random()) # pour un ordre d'entree ds la boucle aleatoire
                     # (en fct du thread)
     # A COMPLETER
     fin = True
     while (fin):
-        mutex.acquire()
-        if Ping_OK == False:
+        Mutex.acquire()
+        if not Ping_OK:
             Ping_OK = True
             print("ping ... ", end="")
             fin = False
-        mutex.release()
+        Mutex.release()
 
-def pong(mutex) :
-    # global Mutex  # pas obligatoire
+def pong() :
+    global Mutex  # pas obligatoire
     global Ping_OK
     sleep(random()) # pour un ordre d'entree ds la boucle aleatoire
                     # (en fct du thread)
     # A COMPLETER
     fin = True
     while (fin):
-        mutex.acquire()
-        if Ping_OK == True:
+        Mutex.acquire()
+        if Ping_OK:
             Ping_OK = False
-            print("pong", end="\n")
+            print("pong")
             fin = False
-        mutex.release()
+        Mutex.release()
 
 # main thread
 if __name__ == '__main__' :
@@ -56,9 +56,9 @@ if __name__ == '__main__' :
     Ping_OK = False     # pour ne pas faire pong s'il manque un ping
     Mutex = threading.Lock()
     # creation d'une liste de N threads ping ; chaque thread fait UN (seul) ping
-    Threads_ping = [ threading.Thread(target=ping,args=(Mutex,)) for i in range(N) ]
+    Threads_ping = [ threading.Thread(target=ping) for i in range(N) ]
     # creation d'une liste de N threads pong ; chaque thread fait UN (seul) pong
-    Threads_pong = [ threading.Thread(target=pong,args=(Mutex,)) for i in range(N) ]
+    Threads_pong = [ threading.Thread(target=pong) for i in range(N) ]
 
     for t in Threads_ping : t.start()
     for t in Threads_pong : t.start()
