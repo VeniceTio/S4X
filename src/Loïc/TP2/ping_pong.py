@@ -17,6 +17,8 @@ import sys
 from threading import Thread, Lock
 # import A COMPLETER
 
+# Pour compter le nombre de ligne : | wc -l
+
 def ping() :
     global Mutex  # pas obligatoire
     global Ping_OK  # obligatoire car la variable est m.a.j.
