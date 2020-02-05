@@ -20,7 +20,8 @@ d.start()
 # time.sleep(0.1)
 t.start()
 
-# d.join()
+
+d.join()
 
 # _____________________________
 # resultat d'execution:
@@ -33,5 +34,3 @@ t.start()
 # non daemon is starting
 # non daemon is exiting
 # daemon is exiting
-
-

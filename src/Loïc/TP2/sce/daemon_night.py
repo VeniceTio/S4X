@@ -7,7 +7,7 @@
 import threading
 import time
 
-def clock(interval): 
+def clock(interval):
     """ fonction exécutée par le thread daemon qui fait office de timer """
     while True:
         time.sleep(interval)
@@ -20,8 +20,8 @@ t.start()
 
 print("Endormissement")
 for i in range(3): # dans ce pgme, seulement 3 cycles de sommeil
-                    # pour que ca ne s'eternise pas 
-    # 1 cycle de sommeil : 90 mn en moyenne 
+                    # pour que ca ne s'eternise pas
+    # 1 cycle de sommeil : 90 mn en moyenne
     # 10 mn en vrai => 1 sec. dans le programme
     # 4 phases par cycle
     print("Cycle %i" %(i + 1))
@@ -34,4 +34,3 @@ for i in range(3): # dans ce pgme, seulement 3 cycles de sommeil
     print("phase intermediaire")
     time.sleep(1)
 print("DRINGGG ! Reveil")
-
