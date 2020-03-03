@@ -1,0 +1,11 @@
+Partie I :
+
+1) Non il crash et donne l'erreur RunTimeError: cannot wait on un-acquired lock.
+
+2) Ce qui est passé en argument du Condition, c'est à dire le mutex.
+
+3) Il attend en boucle un signal, et quand il le reçoit le Lock soit relâché puis il est repris par lui (si après être relâché le Lock est pris par un autre, alors il reste dans la boucle)
+
+4) Le signal est perdu, mais ça ne pose pas de problème dans ce script.
+
+5) Parce que si des signaux sont perdu, on aura alors un problème
