@@ -1,0 +1,15 @@
+
+I
+
+   1. Non une erreur se produit "Exception in thread"  RuntimeErro: cannot wait on un-acquired lock
+    le mutex utilisé n'est pas le meme
+
+   2. l'objet en question est un mutex soit celui rentré en parametre soit un autre si aucun en parametre
+
+   3. il effectue une boucle infinie qui est brisé au deverouillage du mutex suivie de sa prise
+
+   4. par defaut il notifie un thread en attente sur la condition. Si aucun n'attend une exeption est levé RuntimeError.
+    On peut spécifer le nombre de thread à notifier en parametre. Ce n'est pas un probleme car il y autant de thread lancé
+    que de notifie.
+
+   5. Un probleme peut survenir si un signal est perdu ou un changement de priorité peut changer.
