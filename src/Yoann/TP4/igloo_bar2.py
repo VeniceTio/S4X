@@ -49,14 +49,10 @@ class Client(Thread):
     def run(self):
         self.to_arrive()  # pour "espacer" les arrivees
 
+        Client.enter_mutex.acquire()
         Client.drink_mutex.acquire()
-        if Client.drinking >= Seats-1:
-            Client.drink_mutex.release()
-            Client.enter_mutex.acquire()
-        else:
-            Client.drink_mutex.release()
-
-        Client.drink_mutex.acquire()
+        if Client.drinking < Seats-1:
+            Client.enter_mutex.release()
         # "zone" où il ne doit pas y avoir plus <Seats> consommateurs
         Client.drinking += 1
         state = "s'installe et boit"
@@ -77,6 +73,7 @@ class Client(Thread):
         self._fifo.put(item)
         if Client.drinking == Seats-1:
             Client.enter_mutex.release()
+
         Client.drink_mutex.release()
 
 
