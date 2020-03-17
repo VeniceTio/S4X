@@ -14,46 +14,46 @@ from random import random
 from time import sleep
 from sys import argv, stderr
 
-nombrePing = 0
-nombrePong = 0
 
 class Ping(Thread) :
+    waiting = 0
     def __init__(self):
-        global nombrePing
         super().__init__()
-        nombrePing+=1
     def run(self) :
-        global nombrePing
         global Switch
         # global Cond_ping, Cond_pong
         sleep(random())
         Cond_ping.acquire()
-        while (Switch == 1) :
+        # S'il y a déjà une personne dans la file d'attente, alors on se
+        # retrouve à la suite de la file d'attente sans pouvoir lui passer devant.
+        if(Switch == 1 or Ping.waiting > 0) :
+            Ping.waiting+=1
             Cond_pong.wait() # en attente d'une notification de pong
+            Ping.waiting-=1
         print("ping ...", end=' ')
         Switch = 1
         Cond_ping.notify()
         Cond_ping.release()
-        nombrePing-=1
 
 class Pong(Thread) :
+    waiting = 0
     def __init__(self):
-        global nombrePong
         super().__init__()
-        nombrePong+=1
     def run(self) :
-        global nombrePong
         global Switch
         # global Cond_ping, Cond_pong
         sleep(random())
         Cond_pong.acquire()
-        while Switch == 0 :
+        # S'il y a déjà une personne dans la file d'attente, alors on se
+        # retrouve à la suite de la file d'attente sans pouvoir lui passer devant.
+        if (Switch == 0 or Pong.waiting > 0) :
+            Pong.waiting+=1
             Cond_ping.wait() # en attente d'une notification de pong
+            Pong.waiting-=1
         print("pong")
         Switch = 0
         Cond_pong.notify()
         Cond_pong.release()
-        nombrePong-=1
 
 # main thread
 if argv[1:] : 	# si liste des parametres non vide
