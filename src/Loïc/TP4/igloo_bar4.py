@@ -36,6 +36,7 @@ except AssertionError:
 
 class Client(Thread):
     # variables de classe
+    nbClient = 0
     drinking = 0
     attente = 0
     drink_mutex = BoundedSemaphore(1) # pour protéger les maj du compteur <drinking>
@@ -45,45 +46,59 @@ class Client(Thread):
         super().__init__()  # Thread.__init__(self)
         self._id = id
         self._fifo = fifo
+        Client.nbClient += 1
 
     def run(self):
         self.to_arrive() # pour "espacer" les arrivees
-        for i in range(2):
-            Client.drink_mutex.acquire()
-            if Seats == Client.drinking or Client.attente > 0:
-                Client.attente += 1
-                state = "doit attendre une place"
-                item = "client {0:3d} {1:30s}".format(self._id, state)
-                self._fifo.put(item)
-                Client.drink_mutex.release()
-                Client.enter_mutex.acquire()
-                Client.attente -= 1
-
-            Client.drinking += 1
+        Client.drink_mutex.acquire()
+        if Seats == Client.drinking :
+            Client.attente += 1
+            state = "doit attendre parce que le bar est plein"
+            item = "client {0:3d} {1:30s}".format(self._id, state)
+            self._fifo.put(item)
             Client.drink_mutex.release()
-            state = "s'installe et boit"
-            item = "client {0:3d} {2:30s} compteur = {1:d}".format(self._id, \
-                                                     Client.drinking, state)
+            Client.enter_mutex.acquire()
+            Client.attente -= 1
+        elif Client.drinking == 0 and Client.attente == 0 :
+            Client.attente += 1
+            state = "doit attendre parce que le bar est vide"
+            item = "client {0:3d} {1:30s}".format(self._id, state)
             self._fifo.put(item)
 
-
-            # phase de consommation
-            self.drink()
-
-            # Sortie d'un client
-            Client.drink_mutex.acquire()
-            Client.drinking -= 1
             Client.drink_mutex.release()
-            state = "quitte sa place"
-            item = "client {0:3d} {2:30s} compteur = {1:d}".format(self._id, \
-                                                     Client.drinking, state)
-            self._fifo.put(item)
+            Client.enter_mutex.acquire()
+            Client.attente -= 1
+        elif Client.drinking == 0 and Client.attente == 1:
+            Client.enter_mutex.release()
 
-            Client.drink_mutex.acquire()
-            if Client.attente > 0 :
-                Client.enter_mutex.release()
-            else :
-                Client.drink_mutex.release()
+        Client.drink_mutex.acquire()
+        Client.drinking += 1
+        Client.drink_mutex.release()
+        state = "s'installe et boit"
+        item = "client {0:3d} {2:30s} compteur = {1:d}".format(self._id, \
+                                                 Client.drinking, state)
+        self._fifo.put(item)
+
+
+        # phase de consommation
+        self.drink()
+
+        # Sortie d'un client
+        Client.drink_mutex.acquire()
+        Client.drinking -= 1
+        Client.drink_mutex.release()
+        state = "quitte sa place"
+        item = "client {0:3d} {2:30s} compteur = {1:d}".format(self._id, \
+                                                 Client.drinking, state)
+        self._fifo.put(item)
+
+        Client.drink_mutex.acquire()
+        if Client.attente > 0 :
+            Client.enter_mutex.release()
+        else :
+            Client.drink_mutex.release()
+
+        Client.nbClient -= 1
 
 
     def drink(self):
